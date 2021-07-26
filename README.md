@@ -1,2 +1,2 @@
-# typeScript to zig
+# TypeScript to Zig
  A TypeScript-to-Zig compiler
