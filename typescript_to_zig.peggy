@@ -175,7 +175,9 @@ default_statement = "default" _ ":" _ a4:statements {return ["else =>",a4].join(
 statement_with_semicolon
    = 
    "return" __ a2:e  {
-		returned = a2; alert(returned); return "return "+a2;
+		returned = a2;
+		//alert(returned);
+		return "return "+a2;
 	}
 		
    / "return"  {return "return";}
@@ -397,7 +399,9 @@ a1:var_name {return ["var "+a1];}
 function_parameters = head:function_parameter tail:(_ (',') _ function_parameter)* {
       return (tail.reduce(function(result, element) {
         return result.concat(element[3]);
-      }, head)).map(function(value,index){initial_value[value]=function(){return "arguments["+index+"]";}; alert(initial_value[value]); return value+"=arguments["+index+"];";}).join("");
+      }, head)).map(function(value,index){initial_value[value]=function(){return "arguments["+index+"]";};
+		  //alert(initial_value[value]);
+		  return value+"=arguments["+index+"];";}).join("");
     } / "" {return "";}
 
 exprs = head:e tail:(_ (',') _ e)* {
