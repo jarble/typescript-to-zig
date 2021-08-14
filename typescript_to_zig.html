@@ -44,7 +44,7 @@ fetch ("typescript_to_zig.peggy")
 		//get hash
 if(window.location.hash){
 	input.value = decodeURI(window.location.hash).substring(1,window.location.hash.length);
-	document.getElementById("outputText").value = peggy.parse(input.value);
+	document.getElementById("outputText").value = parser.parse(input.value);
 }
 
 alert(JSON.stringify(typescript_to_zig));
