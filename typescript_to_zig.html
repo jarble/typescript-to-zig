@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
-	 <script src="./test_peggy_parsers_bundle.js"></script>
+	 <script src="https://unpkg.com/peggy"></script>
 	</head>
 <body onload>
 	
@@ -12,10 +12,9 @@
 <textarea id="outputText" readonly cols="40" rows="5" placeholder="See output here"></textarea>
 </label>
 <p>You can test the compiled output in the <a href="https://zig-play.dev/">Zig playground.</a></p>
+
 <script>
 		// Get the input box
-(function () {
-
 const tx = document.getElementsByTagName("textarea");
 for (let i = 0; i < tx.length; i++) {
   tx[i].setAttribute("style", "height:" + (tx[i].scrollHeight) + "px;overflow-y:hidden;");
@@ -36,11 +35,19 @@ let input = document.getElementById('my-input');
 // Init a timeout variable to be used below
 let timeout = null;
 
-//get hash
+
+
+fetch ("typescript_to_zig.peggy")
+.then(x => x.text())
+.then(function(y){
+	const parser = peggy.generate(y);
+		//get hash
 if(window.location.hash){
 	input.value = decodeURI(window.location.hash).substring(1,window.location.hash.length);
-	document.getElementById("outputText").value = parse(input.value);
+	document.getElementById("outputText").value = peggy.parse(input.value);
 }
+
+alert(JSON.stringify(typescript_to_zig));
 
 // Listen for keystroke events
 input.addEventListener('keyup', function (e) {
@@ -51,11 +58,13 @@ input.addEventListener('keyup', function (e) {
 
     // Make a new timeout set to go off in 1000ms (1 second)
     timeout = setTimeout(function () {
-        document.getElementById("outputText").value = parse(input.value);
+        document.getElementById("outputText").value = parser.parse(input.value);
 	    window.location.hash = "#"+encodeURI(input.value);
     }, 1000);
 });
-})();
+});
+
+
 
 		</script>
 </body>

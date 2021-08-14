@@ -1,7 +1,9 @@
+(function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c="function"==typeof require&&require;if(!f&&c)return c(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u="function"==typeof require&&require,i=0;i<t.length;i++)o(t[i]);return o}return r})()({1:[function(require,module,exports){
 // Use this code to make it work offline:
 //     https://gist.github.com/kosamari/7c5d1e8449b2fbc97d372675f16b566e
 
-{var initial_value={}; var class_members = ""; var class_name = ""; var type_in_arr = undefined; var anonymous_structs = []; var class_names = []; var class_methods = ""; var extended_methods = {}; var class_fields = ""; var extended_fields = {}; var to_append = []; var temp_vars  = []; var redundant_vars = {}; var declared_redundant_vars = {}; var last_parsed = ""; var returned = undefined; var return_types = {}; var expression_types = {}; var type_parameters = {}; var function_number = 0;
+
+let typescript_to_zig = `{var initial_value={}; var class_members = ""; var class_name = ""; var type_in_arr = undefined; var anonymous_structs = []; var class_names = []; var class_methods = ""; var extended_methods = {}; var class_fields = ""; var extended_fields = {}; var to_append = []; var temp_vars  = []; var redundant_vars = {}; var declared_redundant_vars = {}; var last_parsed = ""; var returned = undefined; var return_types = {}; var expression_types = {}; var type_parameters = {}; var function_number = 0;
 expression_types["true"] = "bool";
 expression_types["false"] = "bool";
 let break_if_returned = "if(is_returned == 1) break;"
@@ -432,7 +434,7 @@ return to_return;
 bracket_statements= "{" _ a2:statements _ "}" {return a2;} / a1:statement_with_semicolon _ ";" {return a1+";";}
 
 IDENTIFIER = [a-zA-Z_][a-zA-Z0-9_]* {return text();}
-STRING_LITERAL = '"' @$([^"\\] / "\\" .)* '"'
+STRING_LITERAL = '"' @$([^"\\\\] / "\\\\" .)* '"'
 
 NUMBER = a:Integer b:NUMBER_ {let to_return =  "@as(f64,"+a+"."+b+")"; initial_value[to_return] = function(){return to_return;}; return to_return;}
 NUMBER_ = "." a:Integer {return a;} / ("." / "") {return "";}
@@ -441,7 +443,10 @@ Integer "integer"
   = _ [0-9]+ { return text(); }
 
 _
-  = [ \t\n\r]*
+  = [\\t\\n\\r]*
   
 __
-  = [ \t\n\r] [ \t\n\r]*
+  = [\\t\\n\\r] [\\t\\n\\r]*
+`;
+
+},{}]},{},[1]);
